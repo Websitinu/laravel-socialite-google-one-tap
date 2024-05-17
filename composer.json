@@ -1,0 +1,40 @@
+{
+    "name": "websitinu/laravel-socialite-google-one-tap",
+    "description": "A very light package to install Google One Tap Login on your Laravel web application that you have already installed Socialite",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "google one tap",
+        "laravel",
+        "websitinu",
+        "socialite",
+        "login with google",
+        "box register google in top"
+        
+    ],
+    "autoload": {
+        "psr-4": {
+            "LaravelSocialite\\GoogleOneTap\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ehsan Ghafoori",
+            "email": "ehsan@websitinu.com"
+        }
+    ],
+
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "google/apiclient": "^2.16",
+        "socialiteproviders/manager": "^4.6"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "google/apiclient-services": [
+            "Oauth2"
+        ]
+    }
+}
