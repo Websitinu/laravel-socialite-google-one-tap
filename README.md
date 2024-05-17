@@ -3,7 +3,7 @@
 
 
 
-# Google One Tap provider for Laravel Socialite
+# Light Package To Install Google One Tap provider for Laravel Socialite
 
 <p align="center">
 <a href="https://github.com/Websitinu/laravel-socialite-google-one-tap"><img src="https://raw.githubusercontent.com/websitinu/laravel-socialite-google-one-tap/main/img/test/badge.svg" alt="Build Status"></a>
