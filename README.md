@@ -18,7 +18,7 @@ composer require websitinu/laravel-socialite-google-one-tap
 ```dotenv
 # .env
 
-GOOGLE_CLIENT_ID_ONE_TAP=176204740264-36ufetlsp0u32ont3ag091fsf5ssmfq2q5.apps.googleusercontent.com
+GOOGLE_CLIENT_ID_ONE_TAP=176204740264-36ufetlsp0u32ont3ag091fsf5ssmfq2q5
 GOOGLE_CLIENT_SECRET_ONE_TAP=GOCSPuX-4-h099j3hOKcAWmCsE0kgyvdg5nU
 GOOGLE_LOGIN_URI_ONE_TAP=/google-one-tap
 ```
