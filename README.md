@@ -1,8 +1,5 @@
 <p align="center"><a href="https://websitinu.com" target="_blank"><img src="https://raw.githubusercontent.com/Websitinu/laravel-socialite-google-one-tap/main/img/Websitinu-laravel-socialite-google-one-tap.png" width="1200"></a></p>
 
-
-
-
 # Light Package To Install Google One Tap provider for Laravel Socialite
 
 <p align="center">
@@ -16,4 +13,70 @@
 
 ```bash
 composer require websitinu/laravel-socialite-google-one-tap
+```
+
+```dotenv
+# .env
+
+GOOGLE_CLIENT_ID_ONE_TAP=176204740264-36ufetlsp0u32ont3ag1fsf5ssmfq2q5.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET_ONE_TAP=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
+GOOGLE_LOGIN_URI_ONE_TAP=/google-one-tap
+```
+
+```php
+# config/services.php
+
+return [
+
+    // other providers
+
+    'laravel-google-one-tap' => [
+      'client_id' => env('GOOGLE_CLIENT_ID_ONE_TAP'),
+      'client_secret' => env('GOOGLE_CLIENT_SECRET_ONE_TAP'),
+      'redirect' => env('GOOGLE_LOGIN_URI_ONE_TAP'),
+    ],
+];
+```
+
+For Laravel 11:
+
+```php
+namespace App\Providers;
+
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
+use LaravelSocialite\GoogleOneTap\LaravelGoogleOneTapServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('laravel-google-one-tap', LaravelGoogleOneTapServiceProvider::class);
+        });
+    }
+}
+
+```
+
+For Laravel 10:
+
+```php
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use LaravelSocialite\GoogleOneTap\LaravelGoogleOneTapServiceProvider;
+
+class EventServiceProvider extends ServiceProvider
+{
+    protected $listen = [
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            // other providers
+            LaravelGoogleOneTapServiceProvider::class,
+        ],
+    ];
+}
 ```
