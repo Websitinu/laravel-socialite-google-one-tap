@@ -211,7 +211,6 @@ public function connect(Request $request)
     } catch (\Exception $ex) {
        
         $user = User::create([
-
             'name' => $googleUser->getName(),
             'provider_name' => 'google-one-tap',
             'email' => $googleUser->getEmail(),
