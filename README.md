@@ -9,11 +9,24 @@
 <a href="https://packagist.org/packages/websitinu/laravel-socialite-google-one-tap"><img src="https://img.shields.io/packagist/l/websitinu/laravel-socialite-google-one-tap" alt="License"></a>
 </p>
 
-## Installation
+## Installation Laravel Socialite Google One Tap
 
 ```bash
 composer require websitinu/laravel-socialite-google-one-tap
 ```
+
+
+## Installation socialite
+
+In addition to typical, form based authentication, Laravel also provides a simple, convenient way to authenticate with OAuth providers using Laravel Socialite.
+
+<p>In addition to typical, form based authentication, Laravel also provides a simple, convenient way to authenticate with OAuth providers using <a href="https://laravel.com/docs/11.x/socialite#installation
+">Laravel Socialite</a>.
+
+```bash
+composer require laravel/socialite
+```
+
 
 ## Usage
 
