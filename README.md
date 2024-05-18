@@ -15,6 +15,8 @@
 composer require websitinu/laravel-socialite-google-one-tap
 ```
 
+Usage
+
 ```dotenv
 # .env
 
@@ -38,7 +40,8 @@ return [
 ];
 ```
 
-For Laravel 11:
+<h3 id="for-example-in-laravel-11"><a href="#for-example-in-laravel-11" class="header-anchor">#</a> For example in Laravel 11+</h3>
+<p>In <code>bootstrap/providers.php</code>.</p>
 
 ```php
 namespace App\Providers;
