@@ -202,7 +202,7 @@ public function connect(Request $request)
     try {
         $googleUser = Socialite::driver('laravel-google-one-tap')->userFromToken($request->input('credential'));
     } catch (InvalidIdToEx $exception) {
-        return response()->json(['error' => $exception])
+        return response()->json(['error' => $exception]);
     }
 
     // Log the user in if the email is associated with a user
