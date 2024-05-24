@@ -213,7 +213,7 @@ public function connect(Request $request)
                 'provider_name' => 'google-one-tap',
                 'email' => $googleUser->getEmail(),
                 'password' => Hash::make($googleUser->getId()),
-                'email_verified_at' =>  $googleUser->attributes['verifiedEmail'] ? now() : null,
+                'email_verified_at' =>  $googleUser->user['email_verified'] ? now() : null,
                 'profile_photo_path' => $googleUser->getAvatar()
         ]);
 
