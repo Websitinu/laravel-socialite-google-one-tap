@@ -16,18 +16,6 @@ composer require websitinu/laravel-socialite-google-one-tap
 ```
 
 
-## Installation socialite
-
-In addition to typical, form based authentication, Laravel also provides a simple, convenient way to authenticate with OAuth providers using Laravel Socialite.
-
-<p>In addition to typical, form based authentication, Laravel also provides a simple, convenient way to authenticate with OAuth providers using <a href="https://laravel.com/docs/11.x/socialite#installation
-">Laravel Socialite</a>.
-
-```bash
-composer require laravel/socialite
-```
-
-
 ## Usage
 
 ### Setup Google project
