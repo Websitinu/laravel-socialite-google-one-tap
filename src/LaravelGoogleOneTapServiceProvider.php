@@ -36,7 +36,7 @@ class LaravelGoogleOneTapServiceProvider extends AbstractProvider
 
 
 
-    protected function getUserByToken($token): array
+    protected function getUserByToken($token)
     {
 
         $this->stateless = true;
@@ -55,15 +55,14 @@ class LaravelGoogleOneTapServiceProvider extends AbstractProvider
         return $payload;
     }
 
-    protected function mapUserToObject(array $user): User
+    protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'avatar' => Arr::get($user, 'avatar'),
-            'email' => Arr::get($user, 'email'),
-            'email_verified' => Arr::get($user, 'email_verified'),
-            'host_domain' => Arr::get($user, 'host_domain'),
             'id' => Arr::get($user, 'id'),
             'name' => Arr::get($user, 'name'),
+            'email' => Arr::get($user, 'email'),
+            'avatar' => Arr::get($user, 'picture'),
+            'nickname' => Arr::get($user, 'familyName')
         ]);
     }
     protected function getAuthUrl($state)

@@ -217,7 +217,7 @@ public function connect(Request $request)
             'email' => $googleUser->getEmail(),
             'password' => Hash::make($googleUser->getId()),
             'email_verified_at' =>  now(),
-            'profile_photo_path' => $googleUser->getAvatar()
+            'profile_photo_path' => $googleUser['picture']
         ]);
 
         Auth::login($user, $remember = true);
