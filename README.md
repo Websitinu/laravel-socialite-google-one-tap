@@ -15,7 +15,6 @@
 composer require websitinu/laravel-socialite-google-one-tap
 ```
 
-
 ## Usage
 
 ### Setup Google project
@@ -161,21 +160,18 @@ This method will return the payload of the JWT token or throw an `Error` if the 
 
 #### Payload array
 
-| Field          | Type    | Description                                                   |
-| -------------- | ------- | ------------------------------------------------------------- |
-| avatar         | ?string | The user's profile picture if present                         |
-| email          | string  | The user's email address                                      |
-| email_verified | boolean | True, if Google has verified the email address                |
-| id             | string  | The user's unique Google ID                                   |
-| name           | string  | The user's name                                               |
-
-
-
+| Field          | Type    | Description                                    |
+| -------------- | ------- | ---------------------------------------------- |
+| id             | string  | The user's unique Google ID                    |
+| name           | string  | The user's name                                |
+| email          | string  | The user's email address                       |
+| avatar         | ?string | The user's profile picture if present          |
+| nick name      | string  | The user's Family Name if present              |
+| email_verified | boolean | True, if Google has verified the email address |
 
 #### connect the payload
 
 With the payload containing the `email` you can now handle the user flow after the user finished interacting with the Google One Tap prompt. This usually involves either registering the user if the Email isn't present in your database or logging in the user if you have a user registered with this Email.
-
 
 ```php
 // routes/web.php
@@ -210,14 +206,15 @@ public function connect(Request $request)
     try {
         $googleUser = User::where('email', $googleUser['email'])->firstOrfail();
     } catch (\Exception $ex) {
-       
+
         $user = User::create([
-            'name' => $googleUser->getName(),
-            'provider_name' => 'google-one-tap',
-            'email' => $googleUser->getEmail(),
-            'password' => Hash::make($googleUser->getId()),
-            'email_verified_at' =>  now(),
-            'profile_photo_path' => $googleUser['picture']
+                'name' => $googleUser->getName(),
+                'lastName' => $googleUser->getNickName(),
+                'provider_name' => 'google-one-tap',
+                'email' => $googleUser->getEmail(),
+                'password' => Hash::make($googleUser->getId()),
+                'email_verified_at' =>  $googleUser->attributes['verifiedEmail'] ? now() : null,
+                'profile_photo_path' => $googleUser->getAvatar()
         ]);
 
         Auth::login($user, $remember = true);

@@ -34,8 +34,6 @@ class LaravelGoogleOneTapServiceProvider extends AbstractProvider
         return 'Note that no connection has been established between this package with Google One Tap.';
     }
 
-
-
     protected function getUserByToken($token)
     {
 
