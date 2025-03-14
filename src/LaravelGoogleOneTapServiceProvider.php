@@ -2,28 +2,19 @@
 
 namespace LaravelSocialite\GoogleOneTap;
 
-use Google\Client;
-use Illuminate\Support\Arr;
-use LaravelSocialite\GoogleOneTap\InvalidIdToEx;
+use LaravelSocialite\GoogleOneTap\Exceptions\InvalidIdTokenException;
+use LaravelSocialite\GoogleOneTap\Services\GoogleOneTapClient;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
-use SocialiteProviders\Manager\OAuth2\User;
-
 
 class LaravelGoogleOneTapServiceProvider extends AbstractProvider
 {
     public const IDENTIFIER = 'Laravel-GOOGLE-ONE-TAP';
 
-    /**
-     * Register services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
         //
@@ -36,44 +27,16 @@ class LaravelGoogleOneTapServiceProvider extends AbstractProvider
 
     protected function getUserByToken($token)
     {
-
         $this->stateless = true;
 
-        $client = new Client([
-            'client_id' => config('services.laravel-google-one-tap.client_id'),
-            'client_secret' => config('services.laravel-google-one-tap.client_secret'),
-        ]);
+        $client = new GoogleOneTapClient();
 
-        $payload = $client->verifyIdToken($token);
+        $payload = $client->verifyToken($token);
 
         if (!$payload) {
-            throw new InvalidIdToEx();
+            throw new InvalidIdTokenException();
         }
 
-        return $payload;
-    }
-
-    protected function mapUserToObject(array $user)
-    {
-        return (new User())->setRaw($user)->map([
-            'id' => Arr::get($user, 'id'),
-            'name' => Arr::get($user, 'name'),
-            'email' => Arr::get($user, 'email'),
-            'avatar' => Arr::get($user, 'picture'),
-            'nickname' => Arr::get($user, 'familyName')
-        ]);
-    }
-    protected function getAuthUrl($state)
-    {
-        //
-    }
-    public function refreshToken($refreshToken)
-    {
-        return 'Note that no connection has been established between this package with Google One Tap.';
-    }
-
-    protected function getTokenUrl()
-    {
-        //
+        return (new GoogleOneTapUser($payload))->toArray();
     }
 }
