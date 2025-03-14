@@ -25,10 +25,30 @@
     ],
 
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "ext-json": "*",
-        "google/apiclient": "^2.16",
-        "socialiteproviders/manager": "^4.6"
+        "google/apiclient": "^2.18",
+        "socialiteproviders/manager": "^4.8"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.12",
+        "pestphp/pest": "^2.36",
+        "phpunit/phpunit": "10.5.36"
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "SocialiteProviders\\GoogleOneTap\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "google-task-composer-cleanup": "Google\\Task\\Composer::cleanup",
+        "pest": "./vendor/bin/pest"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
