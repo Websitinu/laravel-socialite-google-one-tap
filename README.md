@@ -1,6 +1,6 @@
 <p align="center"><a href="https://websitinu.com" target="_blank"><img src="https://raw.githubusercontent.com/Websitinu/laravel-socialite-google-one-tap/main/img/Websitinu-laravel-socialite-google-one-tap.png" width="1200"></a></p>
 
-# Light Package To Install Google One Tap provider for Laravel Socialite
+# A lightweight package to integrate Google One Tap with Laravel Socialite.
 
 <p align="center">
 <a href="https://github.com/Websitinu/laravel-socialite-google-one-tap"><img src="https://raw.githubusercontent.com/websitinu/laravel-socialite-google-one-tap/main/img/test/badge.svg" alt="Build Status"></a>
@@ -9,41 +9,167 @@
 <a href="https://packagist.org/packages/websitinu/laravel-socialite-google-one-tap"><img src="https://img.shields.io/packagist/l/websitinu/laravel-socialite-google-one-tap" alt="License"></a>
 </p>
 
-## Installation Laravel Socialite Google One Tap
+## Installation
+To install this package, run the following composer command:
 
 ```bash
 composer require websitinu/laravel-socialite-google-one-tap
 ```
 
-## Usage
 
-### Setup Google project
+## Configuration
+### Step 1: Create a Google Project
+1.Go to the  [Google Cloud console](https://console.cloud.google.com/apis/credentials/consent).
 
-First you might need to create a new project at [Google Cloud console](https://console.cloud.google.com/apis/credentials/consent), set up the _OAuth consent screen_ and create a new _OAuth Client ID_. Within the Credentials menu you will find the client ID and client secret which you will need for authenticating.
+2.If you haven't already, create a new project by clicking on Select a Project in the top header and then New Project. Follow the steps to create a project.
 
-### Add configuration
+3.Once your project is created, you'll need to set up OAuth consent screen and OAuth 2.0 credentials.
 
-You will need to store the client ID and client secret in your `.env` file and add the configuration to `config/services.php`. You will also need to add a redirection url which will be used for logging in and registering with Google One Tap. This package refers to a specific .env value for Google One Tap to avoid any clashes with the standard Google Socialite provider.
+### For Use Google One Tap
 
-```dotenv
-# .env
+1. **Set up Google OAuth credentials:**
+   - In your **Google Cloud Console**, go to the **Credentials** tab on the left sidebar.
+   - Click on **Create Credentials** and choose **OAuth Client ID**.
+   
+   1.1 **Configure the OAuth consent screen:**
+   - Fill out the necessary fields like **App name**, **User support email**, etc.
+   - For **Scopes**, you can keep the default or add specific scopes if needed.
+   
+   1.2 **Under Application type**, select **Web application**.
+   
+   1.3 **In the Authorized JavaScript origins**, add the URLs where your app will be hosted (e.g., `http://localhost` for local development).
+   
+### Authorized JavaScript origins exampls for local development 
 
-GOOGLE_CLIENT_ID_ONE_TAP=176204740264-36ufetlsp0u32ont3ag091fsf5ssmfq2q5.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET_ONE_TAP=GOCSPuX-4-h099j3hOKcAWmCsE0kgyvdg5nU
-GOOGLE_LOGIN_URI_ONE_TAP=/google-one-tap
+For use with requests from a browser on local host 
+
+```bash
+
+URIs 1 
+http://localhost:8000
+URIs 2 
+http://localhost
+URIs 3 
+https://localhost:8000
+URIs 4 
+https://localhost
+URIs 5 
+http://127.0.0.1:8000
+URIs 6 
+https://127.0.0.1:8000
+URIs 7 
+http://127.0.0.1
+URIs 8 
+https://127.0.0.1
+
 ```
+### you can reaplace it just with your real domain .
+   
+   1.4 **In the Authorized redirect URIs**, add the URL that your app will redirect to after the user logs in. For example, `/google-one-tap` (this is set in your `.env` file).
+
+### Authorized redirect URIs
+
+For use with requests from a web server
+
+```bash
+URIs 1 
+http://127.0.0.1:8000/auth/google/onetap
+URIs 2 
+http://localhost:8000/auth/google/onetap
+URIs 3 
+https://127.0.0.1:8000/auth/google/onetap
+URIs 4 
+https://localhost:8000/auth/google/onetap
+```
+#### or you can reaplace with your own route address
+
+3. **Get the credentials:**
+   After configuring OAuth credentials, you will receive a **Client ID** and **Client Secret**. Add these credentials to your `.env` file as follows:
+
+   ```dotenv
+   # .env
+   GOOGLE_ONE_TAP_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+   GOOGLE_ONE_TAP_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+   GOOGLE_ONE_TAP_LOGIN_URI=http://localhost:8000/auth/google/onetap
+   ```
+
+### For Users Who Want to Use Google One Tap with Regular Google Login
+
+If you want to integrate **Google One Tap** alongside the traditional **Google login**, you'll need to follow these additional steps:
+
+1. **Set up Google OAuth credentials for regular Google login:**
+   - In the same **Credentials** tab, create another **OAuth Client ID** for regular Google login:
+   
+   1.1 **Configure the OAuth consent screen:**
+   - Fill out the necessary fields like **App name**, **User support email**, etc.
+   - For **Scopes**, you can keep the default or add specific scopes if needed.
+   
+   1.2 **Under Application type**, select **Web application**.
+   
+   1.3 **In the Authorized JavaScript origins**, nothing to add and leave empty.
+   
+   1.4 **In the Authorized redirect URIs**, Follow the same steps as for Google One Tap but configure the **Authorized redirect URIs** differently. For Google login, this URI is typically something like `http://localhost:8000/auth/google/callback`
+
+### Authorized redirect URIs
+
+For use with requests from a web server
+
+```bash
+URIs 1 
+http://127.0.0.1:8000/auth/google/callback
+URIs 2 
+http://localhost:8000/auth/google/callback
+URIs 3 
+https://127.0.0.1:8000/auth/google/callback
+URIs 4 
+https://localhost:8000/auth/google/callback
+```
+#### you can reaplace with your own route address
+
+3.  **Add credentials to `.env` file:**
+   In addition to the credentials for **Google One Tap**, add the credentials for the **regular Google login**:
+
+
+   ```dotenv
+   # .env
+   
+   # Google One Tap credentials
+   GOOGLE_ONE_TAP_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID_ONE_TAP
+   GOOGLE_ONE_TAP_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET_ONE_TAP
+   GOOGLE_ONE_TAP_LOGIN_URI=http://localhost:8000/auth/google/onetap
+
+   # Regular Google login credentials
+   GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+   GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+   GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+
+   ```
+
+
 
 ```php
 # config/services.php
 
 return [
 
+    'laravel-google-one-tap' => [
+        'client_id' => env('GOOGLE_ONE_TAP_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_ONE_TAP_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_ONE_TAP_REDIRECT_URL'),
+    ],
+
     // other providers
 
-    'laravel-google-one-tap' => [
-      'client_id' => env('GOOGLE_CLIENT_ID_ONE_TAP'),
-      'client_secret' => env('GOOGLE_CLIENT_SECRET_ONE_TAP'),
-      'redirect' => env('GOOGLE_LOGIN_URI_ONE_TAP'),
+   'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URL'),
+    ],
+
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
 ];
 ```
@@ -52,7 +178,7 @@ return [
 
 Configure the package's listener to listen for `SocialiteWasCalled` events. Add the event to your `listen[]` array in `app/Providers/EventServiceProvider`. See the [Base Installation Guide](https://socialiteproviders.com/usage/) for detailed instructions.
 
-<h3 id="for-example-in-laravel-11"><a href="#for-example-in-laravel-11" class="header-anchor">#</a> For example in Laravel 11+</h3>
+<h3 id="for-example-in-laravel-11"><a href="#for-example-in-laravel-11" class="header-anchor">#</a> For example in Laravel 11 and 12</h3>
 <p>In <code>app/providers/AppServiceProvider.php</code>.</p>
 
 ```php
@@ -103,16 +229,16 @@ Google One Tap requires a specific implementation both in the front-end as the b
 
 ### Front-end
 
-On every page where you want to use Google One Tap, you will need to include the following script in the header of your html templates.
-++
+On any page where you wish to use Google One Tap, you need to add the following script to the header of your HTML templates.
+
 
 ```html
 @guest
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 @endguest
 ```
+The Google One Tap prompt itself can be triggered using either JavaScript or HTML. The following code processes the response server-side in HTML. It doesn't matter where you place this code, and you can also append `data-client_id` and `data-login_uri` to any existing HTML element. For more settings and variations, such as a complete JavaScript implementation, check the [references](#references).
 
-The actual Google One Tap prompt can be initiated with either javascript or html. The following code handles the response server side in html. It does not matter where you place this code. You can also append `data-client_id` and `data-login_uri` to any existing html element. Check [references](#references) for more settings and variations such as a full javascript implementation.
 
 ```html
 @guest
@@ -126,10 +252,10 @@ The actual Google One Tap prompt can be initiated with either javascript or html
 ></div>
 @endguest
 ```
+Styling this element won't affect the appearance, as Google One Tap is transitioning to [FedCM](https://developer.chrome.com/en/docs/privacy-sandbox/fedcm/), meaning the prompt will be handled by the browser if it supports it.
 
-And Styling this element won't have any effect since Google One tap is migrating to [FedCM](https://developer.chrome.com/en/docs/privacy-sandbox/fedcm/) which means the prompt will be handled by the browser itself if the browser supports it.
+To sign out, add a `g_id_signout` class to your sign-out button to prevent a redirection loop due to `data-auto_select` in the previous code.
 
-For signing out you should add a `g_id_signout` class to your sign-out button to avoid a redirection loop because of `data-auto_select` in the previous snippet.
 
 ```html
 <form action="{{ route('logout') }}" method="post">
@@ -137,8 +263,7 @@ For signing out you should add a `g_id_signout` class to your sign-out button to
   <button class="g_id_signout">Sign out</button>
 </form>
 ```
-
-Google One Tap has a cooldown period when a user closes the Google One Tap prompt. The more often a user closes the prompt, the longer it will take for the prompt to be able to reappear to the user. Therefore, you need to include a sign-in button for a fallback to a Google Sign-In prompt. You will likely only want to include this button on login and register pages. [Only](https://developers.google.com/identity/gsi/web/reference/html-reference#button-attribute-types) the data-type field is required.
+Google One Tap has a cooldown period after a user dismisses the prompt. The more frequently a user closes the prompt, the longer it will take for the prompt to reappear. Therefore, include a sign-in button as a fallback to trigger the Google Sign-In prompt. Typically, you'll want to add this button on login and registration pages. The [Only](https://developers.google.com/identity/gsi/web/reference/html-reference#button-attribute-types) required field is `data-type`.
 
 ```html
 <div class="g_id_signin" data-type="standard"></div>
@@ -146,9 +271,41 @@ Google One Tap has a cooldown period when a user closes the Google One Tap promp
 
 ### Back-end
 
-Google One Tap is build on top of OAuth, but works different with an authenticating JTW token instead of with access tokens and refresh tokens. The `redirect()` and `refreshToken()` method won't be used in this context and will throw a `Error` as a reminder.
 
-Your controller won't need to redirect the user and instead of resolving the user, you can immediately resolve the token.
+
+
+```php
+// routes/web.php
+
+
+#if you want use only google one tap
+
+
+use App\Controllers\GoogleOneTapController;
+use Illuminate\Support\Facades\Route;
+
+Route::post('auth/google/onetap', [GoogleOneTapController::class, 'handler'])
+    ->middleware('guest')
+    ->name('google-one-tap.handler');
+
+----------------- or ------------------
+#if you want use with any provider
+
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+
+
+Route::controller(AuthController::class)->prefix('auth')->group(function () {
+    Route::get('{provider}', 'redirectToProvider')->name('provider.auth');
+    Route::get('{provider}/callback', 'callbackToProvider');
+    Route::post('google/onetap', 'googleOneTap')->middleware('guest')->name('google-one-tap.handler');
+});
+
+```
+Google One Tap is built on top of OAuth, but it operates differently by using an authenticating JWT token instead of access and refresh tokens. The redirect() and refreshToken() methods will not be utilized in this context and will throw an Error as a reminder.
+
+Your controller will not need to redirect the user, and instead of resolving the user, you can immediately resolve the token.
 
 ```php
 use Laravel\Socialite\Facades\Socialite;
@@ -156,33 +313,25 @@ use Laravel\Socialite\Facades\Socialite;
 return Socialite::driver('laravel-google-one-tap')->userFromToken($token);
 ```
 
-This method will return the payload of the JWT token or throw an `Error` if the provided token was invalid.
+This function will either return the decoded payload of the JWT token or throw an `Error` if the token provided is invalid.  
 
-#### Payload array
+#### Payload Structure  
 
-| Field          | Type    | Description                                    |
-| -------------- | ------- | ---------------------------------------------- |
-| id             | string  | The user's unique Google ID                    |
-| name           | string  | The user's name                                |
-| email          | string  | The user's email address                       |
-| avatar         | ?string | The user's profile picture if present          |
-| nick name      | string  | The user's Family Name if present              |
-| email_verified | boolean | True, if Google has verified the email address |
+| Field          | Type    | Description                                      |
+| -------------- | ------- | ------------------------------------------------ |
+| id             | string  | Unique identifier for the user from Google       |
+| name           | string  | Full name of the user                            |
+| email          | string  | User’s email address                             |
+| avatar         | ?string | Profile picture of the user (if available)       |
+| nick name      | string  | User’s family name (if provided)                 |
+| email_verified | boolean | Indicates whether Google has verified the email  |
 
-#### connect the payload
+#### Handling the Payload  
 
-With the payload containing the `email` you can now handle the user flow after the user finished interacting with the Google One Tap prompt. This usually involves either registering the user if the Email isn't present in your database or logging in the user if you have a user registered with this Email.
+Once you retrieve the payload, which includes the user's `email`, you can determine the next steps in the authentication process. If the email is already in your database, proceed with logging the user in. Otherwise, you may need to register a new user using the provided details.
 
-```php
-// routes/web.php
 
-use App\Controllers\GoogleOneTapController;
-use Illuminate\Support\Facades\Route;
 
-Route::post('google-one-tap', [GoogleOneTapController::class, 'connect'])
-    ->middleware('guest')
-    ->name('google-one-tap.Connect');
-```
 
 ```php
 // GoogleOneTapController.php
@@ -192,7 +341,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use LaravelSocialite\GoogleOneTap\InvalidIdToEx;
 
-public function connect(Request $request)
+public function handler(Request $request)
 {
     // Verify and validate JWT received from Google One Tap prompt
     try {
@@ -229,13 +378,111 @@ public function connect(Request $request)
 }
 ```
 
+# OR if you want use with any provider
+```php
+// AuthController.php
+
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User\User;
+use App\Models\User\UserProviderProfile;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Laravel\Socialite\Facades\Socialite;
+
+class AuthController extends Controller
+{
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function callbackToProvider($provider)
+    {
+        try {
+            $socialiteUser = Socialite::driver($provider)->user();
+        } catch (\Exception $ex) {
+            Log::error("Social login error: " . $ex->getMessage());
+            return redirect()->route('login')->with('error', 'An error occurred while logging in.');
+        }
+    
+        // Check if the user already exists
+        $user = User::where('email', $socialiteUser->getEmail())->first();
+    
+        if (!$user) {
+            // Create a new user only if they don't exist
+            $user = User::create([
+                'name' => $socialiteUser->getName(),
+                'provider_name' => $provider,
+                'email' => $socialiteUser->getEmail(),
+                'password' => Hash::make($socialiteUser->getId()), // Not used but required
+                'email_verified_at' => now(),
+                'profile_photo_path' => $socialiteUser->getAvatar(),
+            ]);
+    
+        }
+    
+        // Log the user in without updating their data
+        Auth::login($user, true);
+    
+        return redirect()->route('home');
+    }
+    
+
+    public function googleOneTap(Request $request)
+    {
+        try {
+            $googleUser = Socialite::driver('laravel-google-one-tap')->userFromToken($request->input('credential'));
+        } catch (\Exception $exception) {
+            Log::error("Google One Tap Login Failed: " . $exception->getMessage());
+            return response()->json(['error' => 'Google authentication failed'], 400);
+        }
+    
+        // Find existing user or create a new one
+        $user = User::firstOrNew(['email' => $googleUser->getEmail()]);
+    
+        if (!$user->exists) {
+            $user->name = $googleUser->getName();
+            $user->provider_name = 'google';
+            $user->password = Hash::make($googleUser->getId()); // Not used, but required
+            $user->email_verified_at = now();
+            $user->profile_photo_path = $googleUser->getAvatar();
+            $user->save(); // Store user data before using user_id
+        }
+    
+        // Ensure user_id exists
+        if (!$user->id) {
+            Log::error("Google One Tap Error: user_id is null for email: " . ($googleUser->getEmail() ?? 'unknown'));
+            return response()->json(['error' => 'User not found or not created'], 400);
+        }
+    
+    
+        // Log in the user
+        Auth::login($user, true);
+    
+        return redirect()->route('home');
+    }
+    
+    
+}
+
+```
+
+
+
 ## References
 
-- https://developers.google.com/identity/gsi/web/guides/overview
-- https://developers.google.com/identity/gsi/web/reference/html-reference
-- https://developers.google.com/identity/gsi/web/reference/js-reference
-- https://github.com/googleapis/google-api-php-client
-- https://googleapis.github.io/google-api-php-client/main/
+- [Google Identity Services Overview](https://developers.google.com/identity/gsi/web/guides/overview)
+- [Google Identity HTML Reference](https://developers.google.com/identity/gsi/web/reference/html-reference)
+- [Google Identity JavaScript Reference](https://developers.google.com/identity/gsi/web/reference/js-reference)
+- [Google API PHP Client](https://github.com/googleapis/google-api-php-client)
+- [Google API PHP Client Docs](https://googleapis.github.io/google-api-php-client/main/)
+- [Laravel Socialite Documentation](https://laravel.com/docs/socialite)
+- [Google OAuth 2.0 for Web](https://developers.google.com/identity/protocols/oauth2/web-server)
 
 ## License
 
