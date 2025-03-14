@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use LaravelSocialite\GoogleOneTap\GoogleOneTapSocialiteExtend;
+use LaravelSocialite\GoogleOneTap\LaravelGoogleOneTapServiceProvider;
 use PHPUnit\Framework\TestCase;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
