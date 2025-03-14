@@ -4,8 +4,8 @@ namespace LaravelSocialite\GoogleOneTap;
 
 use LaravelSocialite\GoogleOneTap\Exceptions\InvalidIdTokenException;
 use LaravelSocialite\GoogleOneTap\Services\GoogleOneTapClient;
-use Laravel\Socialite\Two\AbstractProvider;
-use Laravel\Socialite\Two\User;
+use SocialiteProviders\Manager\OAuth2\AbstractProvider;
+use SocialiteProviders\Manager\OAuth2\User;
 
 class LaravelGoogleOneTapServiceProvider extends AbstractProvider
 {
