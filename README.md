@@ -155,7 +155,7 @@ return [
     'laravel-google-one-tap' => [
         'client_id' => env('GOOGLE_ONE_TAP_CLIENT_ID'),
         'client_secret' => env('GOOGLE_ONE_TAP_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_ONE_TAP_REDIRECT_URL'),
+        'redirect' => env('GOOGLE_ONE_TAP_LOGIN_URI'),
     ],
 
     // other providers
