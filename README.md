@@ -49,18 +49,7 @@ URIs 1
 http://localhost:8000
 URIs 2 
 http://localhost
-URIs 3 
-https://localhost:8000
-URIs 4 
-https://localhost
-URIs 5 
-http://127.0.0.1:8000
-URIs 6 
-https://127.0.0.1:8000
-URIs 7 
-http://127.0.0.1
-URIs 8 
-https://127.0.0.1
+
 
 ```
 ### you can reaplace it just with your real domain .
@@ -73,13 +62,8 @@ For use with requests from a web server
 
 ```bash
 URIs 1 
-http://127.0.0.1:8000/auth/google/onetap
-URIs 2 
 http://localhost:8000/auth/google/onetap
-URIs 3 
-https://127.0.0.1:8000/auth/google/onetap
-URIs 4 
-https://localhost:8000/auth/google/onetap
+
 ```
 #### or you can reaplace with your own route address
 
@@ -116,13 +100,8 @@ For use with requests from a web server
 
 ```bash
 URIs 1 
-http://127.0.0.1:8000/auth/google/callback
-URIs 2 
 http://localhost:8000/auth/google/callback
-URIs 3 
-https://127.0.0.1:8000/auth/google/callback
-URIs 4 
-https://localhost:8000/auth/google/callback
+
 ```
 #### you can reaplace with your own route address
 
@@ -141,7 +120,7 @@ https://localhost:8000/auth/google/callback
    # Regular Google login credentials
    GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
    GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
-   GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+   GOOGLE_REDIRECT_URL=http://localhost:8000/auth/google/callback
 
    ```
 
